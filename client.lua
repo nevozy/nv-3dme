@@ -20,7 +20,7 @@ CreateThread(function()
                 local ped = GetPlayerPed(player)
                 if NetworkIsPlayerActive(player) and DoesEntityExist(ped) then
                     local coords = GetPedBoneCoords(ped, 0x796e, 0.0, 0.0, 0.0) --HEAD
-                    if #(GetEntityCoords(myPed) - GetEntityCoords(ped) < 8.0 and HasEntityClearLosToEntity(myPed, ped, 17 ) then
+                    if #(GetEntityCoords(myPed) - GetEntityCoords(ped)) < 8.0 and HasEntityClearLosToEntity(myPed, ped, 17 ) then
                         local retval, x, y = GetHudScreenPositionFromWorldPosition(coords.x, coords.y, coords.z- (v.type == 1 and 0.4 or -0.4))
                         currentHTML = currentHTML .. '<p class="message" style="left: ' .. (x*100) .. '%;top: ' .. (y*100) .. '%; color: white;">' .. v.text .. '</p>'
                     end
