@@ -15,6 +15,7 @@ CreateThread(function()
         for k,v in pairs(HUD) do
             if v['time'] < currentTime then
                 HUD[k] = nil
+                print("deleted")
             else
                 local player = GetPlayerFromServerId(k)
                 local ped = GetPlayerPed(player)
@@ -22,7 +23,7 @@ CreateThread(function()
                     local coords = GetPedBoneCoords(ped, 0x796e, 0.0, 0.0, 0.0) --HEAD
                     if #(GetEntityCoords(myPed) - GetEntityCoords(ped)) < 8.0 and HasEntityClearLosToEntity(myPed, ped, 17 ) then
                         local retval, x, y = GetHudScreenPositionFromWorldPosition(coords.x, coords.y, coords.z- (v.type == 1 and 0.4 or -0.4))
-                        currentHTML = currentHTML .. '<p class="message" style="left: ' .. (x*100) .. '%;top: ' .. (y*100) .. '%; color: white;">' .. v.text .. '</p>'
+                        currentHTML = currentHTML .. '<p class="message" style="left: ' .. (x*100) .. '%;top: ' .. (y*1ג00) .. '%; color: white;">' .. v.text .. '</p>'
                     end
                 else
                     HUD[k] = nil
@@ -34,8 +35,6 @@ CreateThread(function()
             lastHTML = currentHTML
             SendNUIMessage({ ['data'] = lastHTML })
             Wait(1)
-        else
-            Wait(200)
         end
     end
 end)
