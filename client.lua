@@ -10,6 +10,7 @@ CreateThread(function()
     while true do
         local currentHTML = ""
         local currentTime = GetGameTimer()
+        local myPed = PlayerPedId()
     
         for k,v in pairs(HUD) do
             if v['time'] < currentTime then
@@ -19,8 +20,10 @@ CreateThread(function()
                 local ped = GetPlayerPed(player)
                 if NetworkIsPlayerActive(player) and DoesEntityExist(ped) then
                     local coords = GetPedBoneCoords(ped, 0x796e, 0.0, 0.0, 0.0) --HEAD
-                    local retval, x, y = GetHudScreenPositionFromWorldPosition(coords.x, coords.y, coords.z- (v.type == 1 and 0.4 or -0.4))
-                    currentHTML = currentHTML .. '<p class="message" style="left: ' .. (x*100) .. '%;top: ' .. (y*100) .. '%; color: white;">' .. v.text .. '</p>'
+                    if #(GetEntityCoords(myPed) - GetEntityCoords(ped) < 8.0 and HasEntityClearLosToEntity(myPed, ped, 17 ) then
+                        local retval, x, y = GetHudScreenPositionFromWorldPosition(coords.x, coords.y, coords.z- (v.type == 1 and 0.4 or -0.4))
+                        currentHTML = currentHTML .. '<p class="message" style="left: ' .. (x*100) .. '%;top: ' .. (y*100) .. '%; color: white;">' .. v.text .. '</p>'
+                    end
                 else
                     HUD[k] = nil
                 end
